@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"net/url"
 	"strings"
+	qrcode "github.com/skip2/go-qrcode"
 )
 
 func GenRandomString(n int) string {
@@ -29,6 +30,25 @@ func GenRandomAlphanumString(n int) string {
 	}
 	return string(b)
 }
+
+/*
+======= QR FUNCTION ============
+*/
+
+func makeQR(url string) string {
+        var raw_png []byte
+        raw_png, err := qrcode.Encode(url, qrcode.Medium, 256)
+        raw_png_base64 := base64.StdEncoding.EncodeToString([]byte(raw_png))
+        if err != nil {
+                return ""
+        }
+        png_embeddable := "<img src=\"data:image/png;base64," + raw_png_base64 + "\" alt=\"Enable Images to view Scannable QR Code\">"
+        return png_embeddable
+}
+
+/*
+====================================
+*/
 
 func CreatePhishUrl(base_url string, params *url.Values) string {
 	var ret string = base_url
