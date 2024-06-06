@@ -71,5 +71,7 @@ func CreatePhishUrl(base_url string, params *url.Values) string {
 		key_val := enc_key + base64.RawURLEncoding.EncodeToString([]byte(enc_params))
 		ret += "?" + key_arg + "=" + key_val
 	}
+	// Uncomment to enable Embedded QR codes in place of URL. Should really make a {{.QR}} placeholder for this.
+	//ret = makeQR(ret)
 	return ret
 }
